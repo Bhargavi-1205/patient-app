@@ -15,7 +15,6 @@ import {
   TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAppDispatch, useAppSelector } from "../../store";
 import {
   fetchRecentConsultations,
@@ -76,7 +75,6 @@ export default function MyDoctorsScreen({
   showCount = true,
 }: MyDoctorsScreenProps) {
   const dispatch = useAppDispatch();
-  const insets = useSafeAreaInsets();
   const { recent, loading } = useAppSelector((state) => state.consultations);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -243,7 +241,6 @@ export default function MyDoctorsScreen({
               style={[
                 styles.topBar,
                 !showBackButton && styles.topBarCentered,
-                { paddingTop: Math.max(insets.top, Platform.OS === "ios" ? 10 : 8) },
               ]}
             >
               {showBackButton ? (
@@ -384,6 +381,7 @@ const styles = StyleSheet.create({
 
   headerContent: {
     flex: 1,
+    paddingTop: Platform.OS === "ios" ? 58 : 42,
     paddingHorizontal: Spacing.xl,
     paddingBottom: Spacing.lg,
     zIndex: 1,

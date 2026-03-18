@@ -12,7 +12,6 @@ import {
     View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store';
 import {
     fetchPatientDetails,
@@ -31,7 +30,6 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function EditProfileScreen({ navigation }: EditProfileScreenProps) {
     const dispatch = useAppDispatch();
-    const insets = useSafeAreaInsets();
     const authPhoneNumber = useAppSelector((state) => state.auth.phoneNumber);
     const { currentPatient, loading, updateLoading, updateSuccess, updateError } = useAppSelector(
         (state) => state.patient,
@@ -142,11 +140,7 @@ export default function EditProfileScreen({ navigation }: EditProfileScreenProps
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor={Colors.background} />
 
-            <View
-                style={[
-                    styles.header,
-                    { paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 14 : 16) },
-                ]}>
+            <View style={styles.header}>
                 <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => navigation.goBack()}
@@ -238,6 +232,7 @@ const styles = StyleSheet.create({
         gap: 12,
         paddingBottom: Spacing.lg,
         paddingHorizontal: Spacing.xl,
+        paddingTop: Platform.OS === 'ios' ? 58 : 42,
     },
     backButton: {
         alignItems: 'center',

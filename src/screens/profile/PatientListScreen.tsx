@@ -16,11 +16,9 @@ import { Colors, Typography, Spacing, BorderRadius, Shadows } from '../../config
 import { ROUTES } from '../../config/constants';
 import FlutterSvgIcon from '../../components/common/FlutterSvgIcon';
 import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function PatientListScreen({ navigation }: any) {
     const dispatch = useAppDispatch();
-    const insets = useSafeAreaInsets();
     const { patients, loading, currentPatient } = useAppSelector((state) => state.patient);
 
     useEffect(() => {
@@ -58,7 +56,7 @@ export default function PatientListScreen({ navigation }: any) {
                 <View style={[styles.decorCircle, styles.dc2]} />
 
                 <View style={styles.headerContent}>
-                    <View style={[styles.headerRow, { paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 10 : 8) }]}>
+                    <View style={styles.headerRow}>
                         <TouchableOpacity
                             style={styles.backButton}
                             onPress={() => navigation.goBack()}
@@ -167,6 +165,7 @@ const styles = StyleSheet.create({
     dc1: { top: -40, right: -30 },
     dc2: { bottom: -50, left: -20 },
     headerContent: {
+        paddingTop: Platform.OS === 'ios' ? 58 : 42,
         paddingHorizontal: Spacing.xl,
         zIndex: 1,
     },

@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
 
     // ─── Header ─────────────────────────────────────────
     header: {
-        height: 230,
+        height: 246,
         position: 'relative',
         overflow: 'hidden',
     },
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     dc1: { top: -40, right: -30 },
     dc2: { bottom: -50, left: -20 },
     headerContent: {
-        paddingTop: Platform.OS === 'ios' ? 56 : 40,
+        paddingTop: Platform.OS === 'ios' ? 58 : 42,
         paddingHorizontal: Spacing.xl,
         zIndex: 1,
     },
@@ -231,10 +231,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.white,
-        borderRadius: BorderRadius.xl,
+        borderRadius: BorderRadius.xxl,
         paddingHorizontal: 14,
-        height: 50,
+        minHeight: 54,
         gap: 10,
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
         ...Shadows.md,
     },
     searchInput: {
@@ -269,6 +271,7 @@ const styles = StyleSheet.create({
 
     // ─── List ───────────────────────────────────────────
     list: {
+        paddingTop: Spacing.md,
         paddingBottom: 100,
     },
 

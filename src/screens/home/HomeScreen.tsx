@@ -16,7 +16,6 @@ import {
     Platform,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Defs, LinearGradient as SvgLinearGradient, Rect, Stop } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -95,7 +94,6 @@ function extractAddressParts(address: string): string {
 
 export default function HomeScreen({ navigation, route }: any) {
     const dispatch = useAppDispatch();
-    const insets = useSafeAreaInsets();
     const { upcoming, loading: appointmentsLoading } = useAppSelector(
         (state) => state.appointments,
     );
@@ -255,10 +253,7 @@ export default function HomeScreen({ navigation, route }: any) {
             <Animated.View
                 style={[
                     styles.header,
-                    {
-                        opacity: headerFade,
-                        paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 12 : 10),
-                    },
+                    { opacity: headerFade },
                 ]}>
                 <View style={styles.headerBase} />
                 <View style={styles.headerOverlay} />
@@ -353,71 +348,73 @@ export default function HomeScreen({ navigation, route }: any) {
                             progressViewOffset={10}
                         />
                     }>
-                    {/* Upcoming Consultations */}
-                    <UpcomingConsultationsSection navigation={navigation} />
+                    <View style={styles.contentPanel}>
+                        {/* Upcoming Consultations */}
+                        <UpcomingConsultationsSection navigation={navigation} />
 
-                    {/* Follow Ups */}
-                    <FollowUpSection navigation={navigation} />
+                        {/* Follow Ups */}
+                        <FollowUpSection navigation={navigation} />
 
-                    {/* Clinics */}
-                    <ClinicsSection navigation={navigation} />
+                        {/* Clinics */}
+                        <ClinicsSection navigation={navigation} />
 
-                    {/* Active Medications */}
-                    <ActiveMedicationSection />
+                        {/* Active Medications */}
+                        <ActiveMedicationSection />
 
-                    {/* Things To Do */}
-                    <View style={styles.thingsSection}>
-                        <Text style={styles.sectionTitle}>Things To Do</Text>
-                        <ScrollView
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={styles.thingsList}>
-                            {THINGS_TO_DO_ITEMS.map((item, index) => (
-                                <View key={`todo-${index}`} style={styles.todoCard}>
-                                    {/* Gradient Background */}
-                                    <View style={styles.todoGradientBg}>
-                                        <Svg
-                                            width="100%"
-                                            height="100%"
-                                            viewBox="0 0 130 150"
-                                            preserveAspectRatio="none">
-                                            <Defs>
-                                                <SvgLinearGradient
-                                                    id={`things-grad-${index}`}
-                                                    x1="0%"
-                                                    y1="0%"
-                                                    x2="100%"
-                                                    y2="100%">
-                                                    <Stop offset="0%" stopColor={item.gradientStart} />
-                                                    <Stop offset="100%" stopColor={item.gradientEnd} />
-                                                </SvgLinearGradient>
-                                            </Defs>
-                                            <Rect
-                                                x="0"
-                                                y="0"
-                                                width="130"
-                                                height="150"
-                                                fill={`url(#things-grad-${index})`}
-                                                rx="18"
-                                                ry="18"
-                                            />
-                                        </Svg>
-                                    </View>
-
-                                    {/* Content on top */}
-                                    <View style={styles.todoContent}>
-                                        <View style={styles.todoIconCircle}>
-                                            <MaterialCommunityIcons
-                                                name={item.iconName}
-                                                size={32}
-                                                color={Colors.white}
-                                            />
+                        {/* Things To Do */}
+                        <View style={styles.thingsSection}>
+                            <Text style={styles.sectionTitle}>Things To Do</Text>
+                            <ScrollView
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                contentContainerStyle={styles.thingsList}>
+                                {THINGS_TO_DO_ITEMS.map((item, index) => (
+                                    <View key={`todo-${index}`} style={styles.todoCard}>
+                                        {/* Gradient Background */}
+                                        <View style={styles.todoGradientBg}>
+                                            <Svg
+                                                width="100%"
+                                                height="100%"
+                                                viewBox="0 0 130 150"
+                                                preserveAspectRatio="none">
+                                                <Defs>
+                                                    <SvgLinearGradient
+                                                        id={`things-grad-${index}`}
+                                                        x1="0%"
+                                                        y1="0%"
+                                                        x2="100%"
+                                                        y2="100%">
+                                                        <Stop offset="0%" stopColor={item.gradientStart} />
+                                                        <Stop offset="100%" stopColor={item.gradientEnd} />
+                                                    </SvgLinearGradient>
+                                                </Defs>
+                                                <Rect
+                                                    x="0"
+                                                    y="0"
+                                                    width="130"
+                                                    height="150"
+                                                    fill={`url(#things-grad-${index})`}
+                                                    rx="18"
+                                                    ry="18"
+                                                />
+                                            </Svg>
                                         </View>
-                                        <Text style={styles.todoTitle}>{item.title}</Text>
+
+                                        {/* Content on top */}
+                                        <View style={styles.todoContent}>
+                                            <View style={styles.todoIconCircle}>
+                                                <MaterialCommunityIcons
+                                                    name={item.iconName}
+                                                    size={32}
+                                                    color={Colors.white}
+                                                />
+                                            </View>
+                                            <Text style={styles.todoTitle}>{item.title}</Text>
+                                        </View>
                                     </View>
-                                </View>
-                            ))}
-                        </ScrollView>
+                                ))}
+                            </ScrollView>
+                        </View>
                     </View>
                 </ScrollView>
             </Animated.View>
@@ -462,6 +459,7 @@ const styles = StyleSheet.create({
         height: 328,
         position: 'relative',
         overflow: 'hidden',
+        paddingTop: Platform.OS === 'ios' ? 58 : 42,
     },
     headerBase: {
         ...StyleSheet.absoluteFillObject,
@@ -625,10 +623,20 @@ const styles = StyleSheet.create({
         paddingTop: Spacing.xxl,
         paddingBottom: 120,
     },
+    contentPanel: {
+        backgroundColor: Colors.surface,
+        borderRadius: BorderRadius.xxxl,
+        paddingHorizontal: Spacing.lg,
+        paddingTop: Spacing.xxl,
+        paddingBottom: Spacing.sm,
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
+        ...Shadows.md,
+    },
 
     // ─── Things To Do ───────────────────────────────────
     thingsSection: {
-        marginBottom: Spacing.xxl,
+        marginBottom: Spacing.xl,
     },
     sectionTitle: {
         ...Typography.headlineSmall,

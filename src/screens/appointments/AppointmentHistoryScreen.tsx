@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchAppointmentHistory } from '../../store/slices/appointmentsSlice';
 import { Colors, Typography, Spacing, BorderRadius, Shadows } from '../../config/theme';
@@ -22,7 +21,6 @@ import FlutterSvgIcon from '../../components/common/FlutterSvgIcon';
 
 export default function AppointmentHistoryScreen({ navigation }: any) {
     const dispatch = useAppDispatch();
-    const insets = useSafeAreaInsets();
     const { history, loading } = useAppSelector((state) => state.appointments);
     const [refreshing, setRefreshing] = useState(false);
 
@@ -152,7 +150,7 @@ export default function AppointmentHistoryScreen({ navigation }: any) {
                             activeOpacity={0.7}>
                             <Ionicons name="chevron-back" size={22} color={Colors.white} />
                         </TouchableOpacity>
-                        <View style={[styles.headerTitleBlock, { paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 10 : 8) }]}>
+                        <View style={styles.headerTitleBlock}>
                             <Text style={styles.headerTitle}>Appointment History</Text>
                             <Text style={styles.headerSubtitle}>Past appointments</Text>
                         </View>
@@ -226,13 +224,13 @@ const styles = StyleSheet.create({
     dc1: { top: -40, right: -30 },
     dc2: { bottom: -50, left: -20 },
     headerContent: {
+        paddingTop: Platform.OS === 'ios' ? 58 : 42,
         paddingHorizontal: Spacing.xl,
         zIndex: 1,
     },
     headerRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: Platform.OS === 'ios' ? 0 : 8,
     },
     backButton: {
         width: 38,

@@ -13,7 +13,6 @@ import {
     Platform,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchDoctors } from '../../store/slices/doctorsSlice';
 import { Colors, Typography, Spacing, BorderRadius, Shadows } from '../../config/theme';
@@ -23,7 +22,6 @@ import FlutterSvgIcon from '../../components/common/FlutterSvgIcon';
 
 export default function AppointmentBookingScreen({ navigation }: any) {
     const dispatch = useAppDispatch();
-    const insets = useSafeAreaInsets();
     const { doctors, loading } = useAppSelector((state) => state.doctors);
     const [searchQuery, setSearchQuery] = useState('');
     const [refreshing, setRefreshing] = useState(false);
@@ -59,11 +57,7 @@ export default function AppointmentBookingScreen({ navigation }: any) {
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View
-                style={[
-                    styles.header,
-                    { paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 14 : 12) },
-                ]}>
+            <View style={styles.header}>
                 <View>
                     <Text style={styles.headerTitle}>Book Appointment</Text>
                     <Text style={styles.headerSubtitle}>Choose your preferred doctor</Text>
@@ -154,6 +148,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
+        paddingTop: Platform.OS === 'ios' ? 58 : 42,
         paddingHorizontal: Spacing.xl,
         paddingBottom: Spacing.lg,
         backgroundColor: Colors.background,

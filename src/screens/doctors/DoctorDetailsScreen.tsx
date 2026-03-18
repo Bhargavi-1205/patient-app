@@ -54,7 +54,9 @@ export default function DoctorDetailsScreen({ route, navigation }: any) {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content" backgroundColor={Colors.primaryBlue} />
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.scrollContent}>
                 {/* Hero Header */}
                 <View style={styles.heroHeader}>
                     <View style={styles.heroBase} />
@@ -62,18 +64,17 @@ export default function DoctorDetailsScreen({ route, navigation }: any) {
                     <View style={[styles.heroCircle, styles.hc1]} />
                     <View style={[styles.heroCircle, styles.hc2]} />
 
-                   <View style={styles.heroTopBar}>
-   <TouchableOpacity
-    style={styles.backButton}
-    onPress={() => navigation.goBack()}
->
-    <FlutterSvgIcon name="back" size={22} color={Colors.white} />
-</TouchableOpacity>
+                    <View style={styles.heroTopBar}>
+                        <TouchableOpacity
+                            style={styles.backButton}
+                            onPress={() => navigation.goBack()}>
+                            <FlutterSvgIcon name="back" size={22} color={Colors.white} />
+                        </TouchableOpacity>
 
-    <Text style={styles.heroScreenTitle}>Doctor Profile</Text>
+                        <Text style={styles.heroScreenTitle}>Doctor Profile</Text>
 
-    <View style={{ width: 44 }} />
-</View>
+                        <View style={styles.heroRightSpacer} />
+                    </View>
 
                     {/* Doctor avatar */}
                     <View style={styles.avatarSection}>
@@ -215,6 +216,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.background,
     },
+    scrollContent: {
+        paddingBottom: 124,
+    },
     centered: {
         flex: 1,
         justifyContent: 'center',
@@ -238,7 +242,7 @@ const styles = StyleSheet.create({
 
     // ─── Hero ───────────────────────────────────────────
     heroHeader: {
-        height: 280,
+        height: 312,
         position: 'relative',
         overflow: 'hidden',
     },
@@ -263,28 +267,34 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingTop: Platform.OS === 'ios' ? 56 : 40,
+        paddingTop: Platform.OS === 'ios' ? 58 : 42,
         paddingHorizontal: Spacing.lg,
         zIndex: 1,
     },
-   backButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 16,
-    backgroundColor: 'rgba(255,255,255,0.15)',
-    justifyContent: 'center',
-    alignItems: 'center',
-},
+    backButton: {
+        width: 48,
+        height: 48,
+        borderRadius: 16,
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.16)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 
     heroScreenTitle: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '700',
         color: Colors.white,
+    },
+    heroRightSpacer: {
+        width: 48,
     },
     avatarSection: {
         alignItems: 'center',
-        marginTop: 8,
+        marginTop: 18,
         zIndex: 1,
+        paddingHorizontal: Spacing.xl,
     },
     avatarContainer: {
         position: 'relative',
@@ -310,19 +320,29 @@ const styles = StyleSheet.create({
     },
     doctorName: {
         fontSize: 22,
-        fontWeight: '700',
+        fontWeight: '800',
         color: Colors.white,
         marginBottom: 4,
+        textAlign: 'center',
     },
     specialization: {
         fontSize: 14,
         color: 'rgba(255, 255, 255, 0.8)',
+        textAlign: 'center',
     },
 
     // ─── Content ────────────────────────────────────────
     content: {
-        padding: Spacing.xl,
-        paddingBottom: 100,
+        marginTop: -22,
+        marginHorizontal: Spacing.lg,
+        paddingHorizontal: Spacing.lg,
+        paddingTop: Spacing.xxl,
+        paddingBottom: Spacing.lg,
+        backgroundColor: Colors.surface,
+        borderRadius: BorderRadius.xxxl,
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
+        ...Shadows.md,
     },
 
     // Stats
@@ -365,11 +385,12 @@ const styles = StyleSheet.create({
 
     // Sections
     sectionCard: {
-        backgroundColor: Colors.surface,
-        borderRadius: BorderRadius.xl,
+        backgroundColor: Colors.surfaceSecondary,
+        borderRadius: BorderRadius.xxl,
         padding: Spacing.lg,
         marginTop: Spacing.lg,
-        ...Shadows.xs,
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
     },
     sectionTitle: {
         ...Typography.headlineSmall,
@@ -421,6 +442,7 @@ const styles = StyleSheet.create({
     },
     clinicInfo: {
         flex: 1,
+        minWidth: 0,
     },
     clinicName: {
         fontSize: 15,
@@ -436,11 +458,13 @@ const styles = StyleSheet.create({
     // Days
     daysRow: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
         gap: 8,
     },
     dayChip: {
-        flex: 1,
+        minWidth: 54,
         paddingVertical: 10,
+        paddingHorizontal: 10,
         borderRadius: BorderRadius.lg,
         backgroundColor: Colors.surfaceSecondary,
         alignItems: 'center',
@@ -465,6 +489,6 @@ const styles = StyleSheet.create({
         right: 0,
         padding: Spacing.xl,
         paddingBottom: Platform.OS === 'ios' ? 34 : 20,
-        backgroundColor: Colors.background,
+        backgroundColor: 'rgba(244, 248, 252, 0.96)',
     },
 });
