@@ -15,6 +15,7 @@ import {
   TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAppDispatch, useAppSelector } from "../../store";
 import {
   fetchRecentConsultations,
@@ -75,6 +76,7 @@ export default function MyDoctorsScreen({
   showCount = true,
 }: MyDoctorsScreenProps) {
   const dispatch = useAppDispatch();
+  const insets = useSafeAreaInsets();
   const { recent, loading } = useAppSelector((state) => state.consultations);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -187,7 +189,7 @@ export default function MyDoctorsScreen({
             <View style={styles.infoContainer}>
               <View style={styles.nameRow}>
                 <Text style={styles.doctorName} numberOfLines={1}>
-                  Dr.{item.doctorName}
+                  Dr. {item.doctorName}
                 </Text>
                 {item.qualification ? (
                   <Text style={styles.qualification} numberOfLines={1}>
@@ -238,7 +240,11 @@ export default function MyDoctorsScreen({
 
           <View style={styles.headerContent}>
             <View
-              style={[styles.topBar, !showBackButton && styles.topBarCentered]}
+              style={[
+                styles.topBar,
+                !showBackButton && styles.topBarCentered,
+                { paddingTop: Math.max(insets.top, Platform.OS === "ios" ? 10 : 8) },
+              ]}
             >
               {showBackButton ? (
                 <TouchableOpacity
@@ -355,7 +361,7 @@ const styles = StyleSheet.create({
   // ─── Header ─────────────────────────────────────────
   headerWrapper: {},
   header: {
-    height: 240,
+    height: 268,
     position: "relative",
     overflow: "hidden",
   },
@@ -378,15 +384,15 @@ const styles = StyleSheet.create({
 
   headerContent: {
     flex: 1,
-    paddingTop: Platform.OS === "ios" ? 56 : 40,
     paddingHorizontal: Spacing.xl,
+    paddingBottom: Spacing.lg,
     zIndex: 1,
   },
   topBar: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    marginBottom: 14,
+    marginBottom: 18,
   },
   topBarCentered: {
     justifyContent: "center",
@@ -408,9 +414,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    gap: 12,
   },
   bannerTextBlock: {
     flex: 1,
+    paddingBottom: Spacing.lg,
   },
   bannerLine: {
     fontSize: 14,
@@ -419,14 +427,14 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   bannerLineB: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
     color: Colors.white,
-    lineHeight: 20,
+    lineHeight: 22,
   },
   bannerImage: {
-    width: 130,
-    height: 90,
+    width: 138,
+    height: 100,
     resizeMode: "contain",
   },
 
@@ -448,7 +456,7 @@ const styles = StyleSheet.create({
   // ─── Search ─────────────────────────────────────────
   searchOuter: {
     paddingHorizontal: Spacing.xl,
-    marginTop: -10,
+    marginTop: -16,
     marginBottom: Spacing.lg,
   },
   searchContainer: {
@@ -457,8 +465,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: BorderRadius.xl,
     paddingHorizontal: 14,
-    height: 50,
+    minHeight: 54,
     gap: 10,
+    borderWidth: 1,
+    borderColor: Colors.borderLight,
     ...Shadows.md,
   },
   searchInput: {
@@ -508,6 +518,8 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
     marginHorizontal: Spacing.xl,
     overflow: "hidden",
+    borderWidth: 1,
+    borderColor: Colors.borderLight,
     ...Shadows.sm,
   },
   accentLine: {
@@ -543,6 +555,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
+    minWidth: 0,
   },
   nameRow: {
     flexDirection: "row",
@@ -559,6 +572,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "600",
     color: Colors.primaryBlue,
+    flexShrink: 1,
   },
   specialization: {
     fontSize: 13,
@@ -588,7 +602,7 @@ const styles = StyleSheet.create({
     color: Colors.muted,
   },
   list: {
-    paddingBottom: 32,
+    paddingBottom: 120,
   },
   emptyContainer: {
     alignItems: "center",

@@ -12,6 +12,7 @@ import {
     View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store';
 import {
     fetchPatientDetails,
@@ -30,6 +31,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function EditProfileScreen({ navigation }: EditProfileScreenProps) {
     const dispatch = useAppDispatch();
+    const insets = useSafeAreaInsets();
     const authPhoneNumber = useAppSelector((state) => state.auth.phoneNumber);
     const { currentPatient, loading, updateLoading, updateSuccess, updateError } = useAppSelector(
         (state) => state.patient,
@@ -140,7 +142,11 @@ export default function EditProfileScreen({ navigation }: EditProfileScreenProps
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor={Colors.background} />
 
-            <View style={styles.header}>
+            <View
+                style={[
+                    styles.header,
+                    { paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 14 : 16) },
+                ]}>
                 <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => navigation.goBack()}
@@ -230,9 +236,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         gap: 12,
-        paddingBottom: Spacing.md,
+        paddingBottom: Spacing.lg,
         paddingHorizontal: Spacing.xl,
-        paddingTop: Platform.OS === 'ios' ? 56 : 42,
     },
     backButton: {
         alignItems: 'center',
@@ -254,9 +259,11 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: Colors.surface,
-        borderRadius: BorderRadius.xl,
-        padding: Spacing.lg,
-        ...Shadows.sm,
+        borderRadius: BorderRadius.xxl,
+        padding: Spacing.xl,
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
+        ...Shadows.md,
     },
     cardTitle: {
         color: Colors.heading,
@@ -270,12 +277,13 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     readOnlyRow: {
-        alignItems: 'center',
+        alignItems: 'flex-start',
         borderBottomColor: Colors.divider,
         borderBottomWidth: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingVertical: 12,
+        gap: Spacing.md,
     },
     label: {
         color: Colors.muted,
@@ -287,6 +295,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '600',
         marginLeft: 12,
+        flex: 1,
         textAlign: 'right',
     },
     mobileLabelWrap: {
@@ -306,13 +315,13 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         alignItems: 'center',
-        backgroundColor: Colors.surfaceSecondary,
+        backgroundColor: Colors.background,
         borderColor: Colors.border,
         borderRadius: BorderRadius.lg,
         borderWidth: 1.5,
         flexDirection: 'row',
         gap: 10,
-        height: 50,
+        minHeight: 52,
         paddingHorizontal: 14,
     },
     inputContainerError: {

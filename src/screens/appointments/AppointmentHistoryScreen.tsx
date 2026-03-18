@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchAppointmentHistory } from '../../store/slices/appointmentsSlice';
 import { Colors, Typography, Spacing, BorderRadius, Shadows } from '../../config/theme';
@@ -21,6 +22,7 @@ import FlutterSvgIcon from '../../components/common/FlutterSvgIcon';
 
 export default function AppointmentHistoryScreen({ navigation }: any) {
     const dispatch = useAppDispatch();
+    const insets = useSafeAreaInsets();
     const { history, loading } = useAppSelector((state) => state.appointments);
     const [refreshing, setRefreshing] = useState(false);
 
@@ -84,33 +86,33 @@ export default function AppointmentHistoryScreen({ navigation }: any) {
 
         return (
             <View style={styles.card}>
-                <View style={styles.cardRow}>
-                    <Text style={[styles.label, styles.nameLabel]}>Name: </Text>
-                    <Text style={[styles.value, styles.nameValue]}>{item.patientName || 'N/A'}</Text>
+                <View style={styles.cardTopRow}>
+                    <View style={styles.titleBlock}>
+                        <Text style={[styles.value, styles.nameValue]} numberOfLines={1}>
+                            {item.patientName || 'N/A'}
+                        </Text>
+                        <Text style={styles.doctorLine} numberOfLines={1}>
+                            {item.doctorName || 'N/A'}
+                        </Text>
+                    </View>
+                    <View style={[styles.statusBadge, { backgroundColor: `${statusColor}18` }]}>
+                        <Text style={[styles.statusText, { color: statusColor }]}>{displayStatus}</Text>
+                    </View>
                 </View>
 
-                <View style={styles.cardRow}>
-                    <Text style={styles.label}>Doctor: </Text>
-                    <Text style={styles.value}>{item.doctorName || 'N/A'}</Text>
-                </View>
-
-                <View style={styles.cardRow}>
-                    <Text style={styles.label}>Clinic: </Text>
-                    <Text style={styles.value}>{item.clinicName || 'N/A'}</Text>
-                </View>
-
-                <View style={styles.cardRow}>
-                    <Text style={styles.label}>Reason: </Text>
-                    <Text style={styles.value}>{item.reasonToVisit || 'Consultation'}</Text>
-                </View>
-
-                <View style={styles.cardRow}>
-                    <Text style={styles.label}>Status: </Text>
-                    <Text style={[styles.value, { color: statusColor }]}>{displayStatus}</Text>
+                <View style={styles.detailGrid}>
+                    <View style={styles.detailItem}>
+                        <Text style={styles.label}>Clinic</Text>
+                        <Text style={styles.value}>{item.clinicName || 'N/A'}</Text>
+                    </View>
+                    <View style={styles.detailItem}>
+                        <Text style={styles.label}>Reason</Text>
+                        <Text style={styles.value}>{item.reasonToVisit || 'Consultation'}</Text>
+                    </View>
                 </View>
 
                 <View style={[styles.cardRow, showPrescriptionButton ? styles.appointmentRowWithButton : { marginBottom: 0 }]}>
-                    <Text style={styles.label}>Appointment: </Text>
+                    <Text style={styles.label}>Appointment</Text>
                     <Text style={styles.value}>
                         {item.date ? item.date : ''}
                         {item.date && item.time ? ', ' : ''}
@@ -150,7 +152,7 @@ export default function AppointmentHistoryScreen({ navigation }: any) {
                             activeOpacity={0.7}>
                             <Ionicons name="chevron-back" size={22} color={Colors.white} />
                         </TouchableOpacity>
-                        <View style={styles.headerTitleBlock}>
+                        <View style={[styles.headerTitleBlock, { paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 10 : 8) }]}>
                             <Text style={styles.headerTitle}>Appointment History</Text>
                             <Text style={styles.headerSubtitle}>Past appointments</Text>
                         </View>
@@ -202,7 +204,7 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        height: 160,
+        height: 178,
         position: 'relative',
         overflow: 'hidden',
     },
@@ -224,13 +226,13 @@ const styles = StyleSheet.create({
     dc1: { top: -40, right: -30 },
     dc2: { bottom: -50, left: -20 },
     headerContent: {
-        paddingTop: Platform.OS === 'ios' ? 56 : 40,
         paddingHorizontal: Spacing.xl,
         zIndex: 1,
     },
     headerRow: {
         flexDirection: 'row',
         alignItems: 'center',
+        paddingTop: Platform.OS === 'ios' ? 0 : 8,
     },
     backButton: {
         width: 38,
@@ -281,18 +283,54 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.borderLight,
     },
-    cardRow: {
+    cardTopRow: {
         flexDirection: 'row',
-        marginBottom: 6,
-        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        gap: Spacing.md,
+        marginBottom: Spacing.md,
+    },
+    titleBlock: {
+        flex: 1,
+        minWidth: 0,
+    },
+    doctorLine: {
+        fontSize: 13,
+        color: Colors.primaryBlue,
+        fontWeight: '600',
+        marginTop: 4,
+    },
+    statusBadge: {
+        borderRadius: BorderRadius.round,
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+    },
+    statusText: {
+        fontSize: 11,
+        fontWeight: '800',
+    },
+    detailGrid: {
+        gap: Spacing.md,
+        marginBottom: Spacing.md,
+    },
+    detailItem: {
+        backgroundColor: Colors.surfaceSecondary,
+        borderRadius: BorderRadius.lg,
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+    },
+    cardRow: {
+        gap: 4,
     },
     appointmentRowWithButton: {
         marginBottom: 16,
     },
     label: {
-        fontSize: 14,
+        fontSize: 12,
         color: Colors.paragraph,
-        fontWeight: '600',
+        fontWeight: '700',
+        textTransform: 'uppercase',
+        letterSpacing: 0.4,
     },
     nameLabel: {
         color: Colors.body,
@@ -300,8 +338,8 @@ const styles = StyleSheet.create({
     },
     value: {
         fontSize: 14,
-        color: Colors.paragraph,
-        fontWeight: '400',
+        color: Colors.body,
+        fontWeight: '500',
         flexShrink: 1,
     },
     nameValue: {

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useAppSelector } from '../../store';
-import { BorderRadius, Colors, Shadows, Spacing } from '../../config/theme';
+import { BorderRadius, Colors, Screen, Shadows, Spacing, Typography } from '../../config/theme';
 import { ROUTES } from '../../config/constants';
 import FlutterSvgIcon from '../common/FlutterSvgIcon';
 
@@ -27,6 +27,8 @@ export default function ClinicsSection({ navigation }: Props) {
     const { clinics } = useAppSelector((state) => state.clinics);
 
     const visibleClinics = useMemo(() => clinics.slice(0, 6), [clinics]);
+    const columns = Screen.isSmall ? 2 : 3;
+    const cardWidth = columns === 2 ? '48%' : '31.5%';
 
     if (clinics.length === 0) {
         return (
@@ -63,7 +65,7 @@ export default function ClinicsSection({ navigation }: Props) {
                         <TouchableOpacity
                             key={`${clinicId || 'clinic'}-${index}`}
                             activeOpacity={0.85}
-                            style={styles.card}
+                            style={[styles.card, { width: cardWidth }]}
                             onPress={() =>
                                 navigation.navigate(ROUTES.CLINIC_DOCTORS, {
                                     clinicId,
@@ -103,60 +105,62 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 8,
+        marginBottom: Spacing.md,
     },
     sectionTitle: {
-        fontSize: 18,
-        color: Colors.heading,
-        fontWeight: '500',
+        ...Typography.headlineSmall,
+        flex: 1,
+        paddingRight: Spacing.md,
     },
     seeAllText: {
         color: Colors.primaryBlue,
         fontSize: 14,
-        fontWeight: '500',
+        fontWeight: '700',
     },
     grid: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'flex-start',
-        columnGap: 10,
+        justifyContent: 'space-between',
         rowGap: 12,
     },
     card: {
-        width: '31%',
         backgroundColor: Colors.white,
-        borderRadius: 12,
-        padding: 10,
+        borderRadius: BorderRadius.xl,
+        paddingHorizontal: 10,
+        paddingVertical: 14,
         alignItems: 'center',
-        minHeight: 110,
+        minHeight: 132,
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
         ...Shadows.sm,
     },
     logoWrap: {
-        width: 50,
-        height: 50,
-        borderRadius: 8,
+        width: 56,
+        height: 56,
+        borderRadius: 14,
         overflow: 'hidden',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: Colors.surfaceSecondary,
     },
     logoImage: {
-        width: 50,
-        height: 50,
-        borderRadius: 8,
+        width: 56,
+        height: 56,
+        borderRadius: 14,
     },
     nameText: {
-        marginTop: 4,
+        marginTop: 10,
         textAlign: 'center',
         fontSize: 13,
-        fontWeight: '600',
-        color: Colors.primaryBlue,
+        fontWeight: '700',
+        color: Colors.heading,
     },
     addressText: {
-        marginTop: 2,
+        marginTop: 4,
         textAlign: 'center',
         fontSize: 11,
         color: Colors.muted,
-        lineHeight: 14,
+        lineHeight: 16,
     },
     emptyWrap: {
         paddingVertical: 20,

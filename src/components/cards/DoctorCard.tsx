@@ -70,7 +70,9 @@ const styles = StyleSheet.create({
         borderRadius: BorderRadius.xl,
         padding: Spacing.lg,
         marginBottom: Spacing.md,
-        alignItems: 'center',
+        alignItems: 'flex-start',
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
         ...Shadows.sm,
     },
     avatarContainer: {
@@ -95,6 +97,8 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
+        minWidth: 0,
+        paddingRight: Spacing.sm,
     },
     name: {
         fontSize: 15,
@@ -112,6 +116,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         color: Colors.primaryBlue,
         fontWeight: '600',
+        flexShrink: 1,
     },
     clinicRow: {
         flexDirection: 'row',
@@ -121,15 +126,19 @@ const styles = StyleSheet.create({
     clinicName: {
         fontSize: 12,
         color: Colors.muted,
+        flexShrink: 1,
     },
     bookButton: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: 5,
         backgroundColor: Colors.primaryBlue,
-        paddingHorizontal: 16,
+        minHeight: 40,
+        paddingHorizontal: 14,
         paddingVertical: 10,
         borderRadius: BorderRadius.lg,
+        alignSelf: 'center',
     },
     bookText: {
         color: Colors.white,

@@ -16,6 +16,7 @@ import {
     Platform,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Defs, LinearGradient as SvgLinearGradient, Rect, Stop } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -94,6 +95,7 @@ function extractAddressParts(address: string): string {
 
 export default function HomeScreen({ navigation, route }: any) {
     const dispatch = useAppDispatch();
+    const insets = useSafeAreaInsets();
     const { upcoming, loading: appointmentsLoading } = useAppSelector(
         (state) => state.appointments,
     );
@@ -250,7 +252,14 @@ export default function HomeScreen({ navigation, route }: any) {
             <StatusBar barStyle="light-content" backgroundColor={Colors.primaryBlue} />
 
             {/* ─── Header ────────────────────────────────────── */}
-            <Animated.View style={[styles.header, { opacity: headerFade }]}>
+            <Animated.View
+                style={[
+                    styles.header,
+                    {
+                        opacity: headerFade,
+                        paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 12 : 10),
+                    },
+                ]}>
                 <View style={styles.headerBase} />
                 <View style={styles.headerOverlay} />
 
@@ -447,7 +456,7 @@ const styles = StyleSheet.create({
 
     // ─── Header ─────────────────────────────────────────
     header: {
-        height: 292,
+        height: 308,
         position: 'relative',
         overflow: 'hidden',
     },
@@ -476,8 +485,8 @@ const styles = StyleSheet.create({
     headerContent: {
         flex: 1,
         paddingHorizontal: Spacing.xl,
-        paddingTop: Platform.OS === 'ios' ? 56 : 40,
-        paddingBottom: 10,
+        paddingTop: Spacing.md,
+        paddingBottom: Spacing.md,
         zIndex: 1,
     },
 
@@ -500,12 +509,13 @@ const styles = StyleSheet.create({
     topBarCenter: {
         flex: 1,
         alignItems: 'center',
-        marginHorizontal: 10,
+        marginHorizontal: 8,
+        minWidth: 0,
     },
     locationPill: {
         maxWidth: '100%',
-        height: 38,
-        borderRadius: 19,
+        minHeight: 40,
+        borderRadius: 20,
         paddingHorizontal: 14,
         flexDirection: 'row',
         alignItems: 'center',
@@ -515,10 +525,10 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(255, 255, 255, 0.24)',
     },
     locationText: {
+        flexShrink: 1,
         color: Colors.white,
         fontSize: 13,
         fontWeight: '600',
-        maxWidth: 170,
     },
     notifButton: {
         width: 42,
@@ -552,7 +562,7 @@ const styles = StyleSheet.create({
 
     // ─── Greeting ───────────────────────────────────────
     greetingSection: {
-        marginTop: 18,
+        marginTop: 24,
     },
     greeting: {
         fontSize: 14,
@@ -572,9 +582,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: Colors.white,
         borderRadius: BorderRadius.xxl,
-        height: 52,
+        minHeight: 56,
         paddingHorizontal: 18,
-        marginTop: 18,
+        marginTop: 20,
         gap: 10,
         borderWidth: 1,
         borderColor: '#E8EEF5',
@@ -595,15 +605,15 @@ const styles = StyleSheet.create({
     // ─── Scroll ─────────────────────────────────────────
     scrollContainer: {
         flex: 1,
-        marginTop: -18,
+        marginTop: -22,
     },
     scrollView: {
         flex: 1,
     },
     scrollContent: {
         paddingHorizontal: Spacing.xl,
-        paddingTop: Spacing.lg,
-        paddingBottom: 108,
+        paddingTop: Spacing.xl,
+        paddingBottom: 120,
     },
 
     // ─── Things To Do ───────────────────────────────────

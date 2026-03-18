@@ -16,9 +16,11 @@ import { Colors, Typography, Spacing, BorderRadius, Shadows } from '../../config
 import { ROUTES } from '../../config/constants';
 import FlutterSvgIcon from '../../components/common/FlutterSvgIcon';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function PatientListScreen({ navigation }: any) {
     const dispatch = useAppDispatch();
+    const insets = useSafeAreaInsets();
     const { patients, loading, currentPatient } = useAppSelector((state) => state.patient);
 
     useEffect(() => {
@@ -56,7 +58,7 @@ export default function PatientListScreen({ navigation }: any) {
                 <View style={[styles.decorCircle, styles.dc2]} />
 
                 <View style={styles.headerContent}>
-                    <View style={styles.headerRow}>
+                    <View style={[styles.headerRow, { paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 10 : 8) }]}>
                         <TouchableOpacity
                             style={styles.backButton}
                             onPress={() => navigation.goBack()}
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
 
     // ─── Header ─────────────────────────────────────────
     header: {
-        height: 160,
+        height: 178,
         position: 'relative',
         overflow: 'hidden',
     },
@@ -165,7 +167,6 @@ const styles = StyleSheet.create({
     dc1: { top: -40, right: -30 },
     dc2: { bottom: -50, left: -20 },
     headerContent: {
-        paddingTop: Platform.OS === 'ios' ? 56 : 40,
         paddingHorizontal: Spacing.xl,
         zIndex: 1,
     },
@@ -230,7 +231,9 @@ const styles = StyleSheet.create({
         borderRadius: BorderRadius.xl,
         padding: Spacing.lg,
         marginBottom: Spacing.md,
-        alignItems: 'center',
+        alignItems: 'flex-start',
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
         ...Shadows.sm,
     },
     activeCard: {
@@ -252,17 +255,20 @@ const styles = StyleSheet.create({
     },
     patientInfo: {
         flex: 1,
+        minWidth: 0,
     },
     nameRow: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
+        flexWrap: 'wrap',
         gap: 8,
-        marginBottom: 3,
+        marginBottom: 6,
     },
     patientName: {
         fontSize: 15,
-        fontWeight: '600',
+        fontWeight: '700',
         color: Colors.heading,
+        flexShrink: 1,
     },
     activeBadge: {
         backgroundColor: Colors.success + '20',
@@ -278,8 +284,7 @@ const styles = StyleSheet.create({
     patientMeta: {
         fontSize: 12,
         color: Colors.primaryBlue,
-        fontWeight: '500',
-        marginBottom: 3,
+        fontWeight: '600',
     },
     phoneRow: {
         flexDirection: 'row',

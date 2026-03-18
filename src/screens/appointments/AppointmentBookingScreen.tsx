@@ -13,6 +13,7 @@ import {
     Platform,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchDoctors } from '../../store/slices/doctorsSlice';
 import { Colors, Typography, Spacing, BorderRadius, Shadows } from '../../config/theme';
@@ -22,6 +23,7 @@ import FlutterSvgIcon from '../../components/common/FlutterSvgIcon';
 
 export default function AppointmentBookingScreen({ navigation }: any) {
     const dispatch = useAppDispatch();
+    const insets = useSafeAreaInsets();
     const { doctors, loading } = useAppSelector((state) => state.doctors);
     const [searchQuery, setSearchQuery] = useState('');
     const [refreshing, setRefreshing] = useState(false);
@@ -57,7 +59,11 @@ export default function AppointmentBookingScreen({ navigation }: any) {
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View style={styles.header}>
+            <View
+                style={[
+                    styles.header,
+                    { paddingTop: Math.max(insets.top, Platform.OS === 'ios' ? 14 : 12) },
+                ]}>
                 <View>
                     <Text style={styles.headerTitle}>Book Appointment</Text>
                     <Text style={styles.headerSubtitle}>Choose your preferred doctor</Text>
@@ -148,10 +154,9 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: Platform.OS === 'ios' ? 56 : 40,
-        paddingHorizontal: Spacing.lg,
-        paddingBottom: Spacing.sm,
-        backgroundColor: Colors.surface,
+        paddingHorizontal: Spacing.xl,
+        paddingBottom: Spacing.lg,
+        backgroundColor: Colors.background,
         gap: 12,
     },
 
@@ -165,16 +170,19 @@ const styles = StyleSheet.create({
     },
     searchWrapper: {
         paddingHorizontal: Spacing.xl,
-        paddingVertical: Spacing.md,
+        paddingBottom: Spacing.md,
     },
     searchContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.surfaceSecondary,
+        backgroundColor: Colors.surface,
         borderRadius: BorderRadius.xl,
         paddingHorizontal: 14,
-        height: 48,
+        minHeight: 52,
         gap: 10,
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
+        ...Shadows.sm,
     },
     searchInput: {
         flex: 1,
@@ -194,6 +202,7 @@ const styles = StyleSheet.create({
         color: Colors.muted,
         marginTop: 8,
         marginLeft: 4,
+        fontWeight: '600',
     },
     centered: {
         flex: 1,

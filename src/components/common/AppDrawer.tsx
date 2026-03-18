@@ -9,6 +9,7 @@ import {
     Alert,
     Image,
     Platform,
+    ScrollView,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -196,8 +197,11 @@ export default function AppDrawer({ navigation, onClose }: DrawerProps) {
                 </TouchableOpacity>
             </View>
 
-            {/* Menu Items — Fixed area (no scroll) */}
-            <View style={styles.menuContainer}>
+            {/* Menu Items */}
+            <ScrollView
+                style={styles.menuScroll}
+                contentContainerStyle={styles.menuContainer}
+                showsVerticalScrollIndicator={false}>
                 {/* Main Section */}
                 <Text style={styles.sectionLabel}>MENU</Text>
                 <View style={styles.menuCard}>
@@ -219,7 +223,7 @@ export default function AppDrawer({ navigation, onClose }: DrawerProps) {
                         </React.Fragment>
                     ))}
                 </View>
-            </View>
+            </ScrollView>
 
             {/* Sign Out — Pinned to Bottom */}
             <View style={[styles.logoutSection, { paddingBottom: Math.max(insets.bottom, 16) + 8 }]}>
@@ -339,11 +343,12 @@ const styles = StyleSheet.create({
 
     // ─── Menu ───────────────────────────────────────────
     menuContainer: {
-        flex: 1,
         paddingHorizontal: Spacing.lg,
         paddingTop: Spacing.xl,
         paddingBottom: Spacing.sm,
-        justifyContent: 'flex-start',
+    },
+    menuScroll: {
+        flex: 1,
     },
     sectionLabel: {
         fontSize: 11,
