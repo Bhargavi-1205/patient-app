@@ -308,9 +308,6 @@ export default function HomeScreen({ navigation, route }: any) {
                     <View style={styles.greetingSection}>
                         <Text style={styles.greeting}>{getGreeting()},</Text>
                         <Text style={styles.userName}>{firstName} 👋</Text>
-                        <Text style={styles.greetingSubtext}>
-                            Stay on top of appointments, medicines, and follow-ups today.
-                        </Text>
                     </View>
 
                     {/* Search Bar */}
@@ -456,7 +453,7 @@ const styles = StyleSheet.create({
 
     // ─── Header ─────────────────────────────────────────
     header: {
-        height: 328,
+        height: 300,
         position: 'relative',
         overflow: 'hidden',
         paddingTop: Platform.OS === 'ios' ? 58 : 42,
@@ -563,7 +560,8 @@ const styles = StyleSheet.create({
 
     // ─── Greeting ───────────────────────────────────────
     greetingSection: {
-        marginTop: 24,
+        marginTop: 28,
+        marginBottom: 24,
     },
     greeting: {
         fontSize: 14,
@@ -574,14 +572,7 @@ const styles = StyleSheet.create({
         fontSize: 27,
         fontWeight: '800',
         color: Colors.white,
-        marginTop: 2,
-    },
-    greetingSubtext: {
-        marginTop: 8,
-        color: 'rgba(255, 255, 255, 0.82)',
-        fontSize: 13,
-        lineHeight: 19,
-        maxWidth: 260,
+        marginTop: 4,
     },
 
     // ─── Search Bar ─────────────────────────────────────
@@ -592,7 +583,7 @@ const styles = StyleSheet.create({
         borderRadius: BorderRadius.xxl,
         minHeight: 56,
         paddingHorizontal: 18,
-        marginTop: 24,
+        marginTop: 0,
         gap: 10,
         borderWidth: 1,
         borderColor: '#E8EEF5',
@@ -613,7 +604,7 @@ const styles = StyleSheet.create({
     // ─── Scroll ─────────────────────────────────────────
     scrollContainer: {
         flex: 1,
-        marginTop: -6,
+        marginTop: -2,
     },
     scrollView: {
         flex: 1,

@@ -164,11 +164,10 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         flex: 1,
-        textAlign: 'center',
         color: Colors.white,
         fontSize: 20,
         fontWeight: '800',
-        marginRight: 40,
+        marginLeft: 16,
     },
     headerSpacer: {
         width: 40,

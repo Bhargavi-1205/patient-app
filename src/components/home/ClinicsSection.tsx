@@ -26,7 +26,7 @@ const capitalizeEachWord = (input: string) =>
 export default function ClinicsSection({ navigation }: Props) {
     const { clinics } = useAppSelector((state) => state.clinics);
 
-    const visibleClinics = useMemo(() => clinics.slice(0, 6), [clinics]);
+    const visibleClinics = useMemo(() => clinics.slice(0, 4), [clinics]);
     const columns = Screen.isSmall ? 2 : 3;
     const cardWidth = columns === 2 ? '48%' : '31.5%';
 

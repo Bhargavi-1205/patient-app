@@ -1,6 +1,7 @@
 // Doctor Card — Modern Premium Design
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Colors, Typography, Spacing, BorderRadius, Shadows } from '../../config/theme';
 import { ROUTES } from '../../config/constants';
 import { Doctor } from '../../store/slices/doctorsSlice';
@@ -56,7 +57,7 @@ export default function DoctorCard({ doctor, navigation, onBookPress }: DoctorCa
                 style={styles.bookButton}
                 onPress={onBookPress}
                 activeOpacity={0.7}>
-                <FlutterSvgIcon name="calendar" size={14} color={Colors.white} />
+                <Ionicons name="calendar-outline" size={16} color={Colors.white} />
                 <Text style={styles.bookText}>Book</Text>
             </TouchableOpacity>
         </TouchableOpacity>
@@ -132,10 +133,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 5,
+        gap: 7,
         backgroundColor: Colors.primaryBlue,
         minHeight: 40,
-        paddingHorizontal: 14,
+        paddingHorizontal: 16,
         paddingVertical: 10,
         borderRadius: BorderRadius.lg,
         alignSelf: 'center',
