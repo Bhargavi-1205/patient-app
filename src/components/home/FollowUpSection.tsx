@@ -346,9 +346,11 @@ const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
         backgroundColor: Colors.surface,
-        borderRadius: BorderRadius.xl,
+        borderRadius: BorderRadius.xxl,
         marginBottom: Spacing.md,
         overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
         ...Shadows.sm,
     },
     accentLine: {
@@ -358,7 +360,7 @@ const styles = StyleSheet.create({
     },
     cardInner: {
         flex: 1,
-        padding: Spacing.md,
+        padding: Spacing.lg,
     },
 
     // ─── Top Row ────────────────────────────────────────
@@ -381,18 +383,19 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         flex: 1,
+        minWidth: 0,
     },
     doctorName: {
-        fontSize: 14,
-        fontWeight: '700',
+        fontSize: 15,
+        fontWeight: '800',
         color: Colors.heading,
-        marginBottom: 2,
+        marginBottom: 4,
     },
     specialization: {
-        fontSize: 11,
+        fontSize: 12,
         color: Colors.body,
-        lineHeight: 15,
-        marginBottom: 4,
+        lineHeight: 17,
+        marginBottom: 6,
     },
     dateBadge: {
         alignSelf: 'flex-start',
@@ -410,9 +413,9 @@ const styles = StyleSheet.create({
         color: '#E67E22',
     },
     patientText: {
-        fontSize: 11,
+        fontSize: 12,
         color: Colors.muted,
-        fontWeight: '500',
+        fontWeight: '600',
     },
 
     // ─── Divider ────────────────────────────────────────
@@ -433,15 +436,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 6,
-        paddingVertical: 8,
+        minHeight: 42,
+        paddingVertical: 10,
         borderRadius: BorderRadius.lg,
         borderWidth: 1.5,
         borderColor: Colors.primaryBlue,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.primaryUltraLight,
     },
     callBtnText: {
         fontSize: 12,
-        fontWeight: '600',
+        fontWeight: '700',
         color: Colors.primaryBlue,
     },
     bookBtn: {
@@ -450,13 +454,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 6,
-        paddingVertical: 8,
+        minHeight: 42,
+        paddingVertical: 10,
         borderRadius: BorderRadius.lg,
         backgroundColor: Colors.primaryBlue,
     },
     bookBtnText: {
         fontSize: 12,
-        fontWeight: '600',
+        fontWeight: '700',
         color: Colors.white,
     },
 

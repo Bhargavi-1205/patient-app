@@ -125,6 +125,7 @@ export default function GradientButton({
                 {(variant === 'primary' || variant === 'danger') && !isDisabled ? (
                     <>
                         <View style={styles.topGlow} />
+                        <View style={styles.centerGlow} />
                         <View style={styles.bottomTint} />
                     </>
                 ) : null}
@@ -155,12 +156,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         overflow: 'hidden',
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.18)',
+        borderColor: 'rgba(255,255,255,0.14)',
+        position: 'relative',
     },
     content: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 8,
+        zIndex: 2,
     },
     iconWrapper: {
         marginRight: 4,
@@ -180,5 +183,15 @@ const styles = StyleSheet.create({
         bottom: 0,
         height: '50%',
         backgroundColor: 'rgba(0,0,0,0.07)',
+    },
+    centerGlow: {
+        position: 'absolute',
+        top: 6,
+        left: 14,
+        right: 14,
+        height: '42%',
+        borderRadius: 999,
+        backgroundColor: 'rgba(255,255,255,0.12)',
+        zIndex: 1,
     },
 });

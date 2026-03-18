@@ -201,18 +201,18 @@ const styles = StyleSheet.create({
         paddingRight: 10,
     },
     periodCard: {
-        width: 130,
+        width: 146,
         backgroundColor: Colors.surface,
-        borderRadius: BorderRadius.xl,
-        padding: 10,
+        borderRadius: BorderRadius.xxl,
+        padding: 12,
         borderWidth: 1,
         borderColor: Colors.borderLight,
-        ...Shadows.xs,
-        minHeight: 118,
+        ...Shadows.sm,
+        minHeight: 130,
     },
     periodTitle: {
         fontSize: 14,
-        fontWeight: '700',
+        fontWeight: '800',
         color: Colors.heading,
     },
     iconsRow: {
@@ -222,9 +222,9 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     iconCircle: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
+        width: 34,
+        height: 34,
+        borderRadius: 17,
         backgroundColor: Colors.primaryBlue,
         justifyContent: 'center',
         alignItems: 'center',
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     timeText: {
         ...Typography.caption,
         color: Colors.muted,
-        fontWeight: '600',
+        fontWeight: '700',
     },
     dot: {
         width: 10,
@@ -257,8 +257,10 @@ const styles = StyleSheet.create({
         width: '100%',
         maxWidth: 420,
         backgroundColor: Colors.surface,
-        borderRadius: BorderRadius.xl,
+        borderRadius: BorderRadius.xxl,
         overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: Colors.borderLight,
         ...Shadows.lg,
         maxHeight: '75%',
     },
@@ -291,12 +293,14 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.divider,
     },
     modalPeriod: {
-        fontSize: 14,
-        fontWeight: '700',
-        color: Colors.heading,
+        fontSize: 13,
+        fontWeight: '800',
+        color: Colors.primaryBlue,
         paddingHorizontal: Spacing.xl,
         paddingTop: Spacing.lg,
         paddingBottom: Spacing.sm,
+        textTransform: 'uppercase',
+        letterSpacing: 0.6,
     },
     modalList: {
         paddingHorizontal: Spacing.xl,
@@ -308,6 +312,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         gap: 12,
         paddingVertical: Spacing.md,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.divider,
     },
     leftIconCircle: {
         width: 30,
@@ -320,6 +326,7 @@ const styles = StyleSheet.create({
     },
     medText: {
         flex: 1,
+        minWidth: 0,
     },
     medName: {
         fontSize: 14,

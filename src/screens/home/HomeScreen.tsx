@@ -313,6 +313,9 @@ export default function HomeScreen({ navigation, route }: any) {
                     <View style={styles.greetingSection}>
                         <Text style={styles.greeting}>{getGreeting()},</Text>
                         <Text style={styles.userName}>{firstName} 👋</Text>
+                        <Text style={styles.greetingSubtext}>
+                            Stay on top of appointments, medicines, and follow-ups today.
+                        </Text>
                     </View>
 
                     {/* Search Bar */}
@@ -456,7 +459,7 @@ const styles = StyleSheet.create({
 
     // ─── Header ─────────────────────────────────────────
     header: {
-        height: 308,
+        height: 328,
         position: 'relative',
         overflow: 'hidden',
     },
@@ -486,7 +489,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: Spacing.xl,
         paddingTop: Spacing.md,
-        paddingBottom: Spacing.md,
+        paddingBottom: Spacing.xl,
         zIndex: 1,
     },
 
@@ -575,6 +578,13 @@ const styles = StyleSheet.create({
         color: Colors.white,
         marginTop: 2,
     },
+    greetingSubtext: {
+        marginTop: 8,
+        color: 'rgba(255, 255, 255, 0.82)',
+        fontSize: 13,
+        lineHeight: 19,
+        maxWidth: 260,
+    },
 
     // ─── Search Bar ─────────────────────────────────────
     searchBar: {
@@ -584,7 +594,7 @@ const styles = StyleSheet.create({
         borderRadius: BorderRadius.xxl,
         minHeight: 56,
         paddingHorizontal: 18,
-        marginTop: 20,
+        marginTop: 24,
         gap: 10,
         borderWidth: 1,
         borderColor: '#E8EEF5',
@@ -605,14 +615,14 @@ const styles = StyleSheet.create({
     // ─── Scroll ─────────────────────────────────────────
     scrollContainer: {
         flex: 1,
-        marginTop: -22,
+        marginTop: -6,
     },
     scrollView: {
         flex: 1,
     },
     scrollContent: {
         paddingHorizontal: Spacing.xl,
-        paddingTop: Spacing.xl,
+        paddingTop: Spacing.xxl,
         paddingBottom: 120,
     },
 

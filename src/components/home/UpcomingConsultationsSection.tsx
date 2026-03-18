@@ -398,14 +398,16 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   cardsContainer: {
-    gap: 10,
-    paddingRight: 4,
+    gap: 12,
+    paddingRight: 6,
   },
   appointmentCard: {
-    width: 258,
-    borderRadius: BorderRadius.xl,
+    width: 272,
+    borderRadius: BorderRadius.xxl,
     backgroundColor: Colors.primaryBlue,
-    padding: Spacing.md,
+    padding: Spacing.lg,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.16)",
     ...Shadows.md,
   },
   cardTopRow: {
@@ -424,11 +426,12 @@ const styles = StyleSheet.create({
   cardTopInfo: {
     flex: 1,
     gap: 4,
+    minWidth: 0,
   },
   doctorName: {
     color: Colors.white,
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: "800",
   },
   dateTimeRow: {
     flexDirection: "row",
@@ -443,15 +446,17 @@ const styles = StyleSheet.create({
   },
   specializationText: {
     color: "#EAF4FF",
-    fontSize: 12,
-    fontWeight: "500",
-    marginTop: 10,
+    fontSize: 13,
+    fontWeight: "700",
+    marginTop: 14,
   },
   typeText: {
     color: "#B9DAFF",
     fontSize: 11,
-    marginTop: 2,
-    fontWeight: "500",
+    marginTop: 4,
+    fontWeight: "700",
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
   },
   loadingCard: {
     backgroundColor: Colors.surface,
